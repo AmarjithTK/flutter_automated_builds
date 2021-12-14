@@ -44,7 +44,7 @@ jobs:
 
 
     # share the release apk directly to telegram    
-    - uses: actions/checkout@master
+    # - uses: actions/checkout@master
     - name: send release apk
       uses: appleboy/telegram-action@master
       with:
