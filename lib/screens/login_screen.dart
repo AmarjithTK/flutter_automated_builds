@@ -20,9 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Container(
                 height: 200.0,
-                child: Image(
-                  image: NetworkImage(
-                      'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+                child: Hero(
+                  tag: 'logo',
+                  child: Image(
+                    image: NetworkImage(
+                        'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+                  ),
                 )),
             SizedBox(
               height: 48.0,

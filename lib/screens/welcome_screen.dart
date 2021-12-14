@@ -26,11 +26,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-              child: Image(
-                width: 200.0,
-                height: 200.0,
-                image: NetworkImage(
-                    'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+              child: Hero(
+                tag: 'logo',
+                child: Image(
+                  width: 200.0,
+                  height: 200.0,
+                  image: NetworkImage(
+                      'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+                ),
               ),
             ),
             SizedBox(
