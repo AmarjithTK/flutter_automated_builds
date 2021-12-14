@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linuxclock/main.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

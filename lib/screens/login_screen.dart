@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linuxclock/widgets/betterbutton.dart';
+import '../widgets/betterbutton.dart';
 
 import '../constants.dart';
 
