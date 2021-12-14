@@ -42,12 +42,6 @@ jobs:
     # Build apk.
     - run: flutter build apk --split-per-abi
 
-    
-    # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
-      with:
-        name: release-apk
-        path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
 
     # share the release apk directly to telegram    
     - uses: actions/checkout@master
@@ -58,3 +52,9 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: ${{ github.event.head_commit.message }} 
         document: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+    
+    # Upload generated apk to the artifacts.
+    - uses: actions/upload-artifact@v1
+      with:
+        name: release-apk
+        path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
