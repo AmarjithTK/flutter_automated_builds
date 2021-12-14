@@ -10,6 +10,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  // AnimationController _controller ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
