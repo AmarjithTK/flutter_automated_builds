@@ -39,7 +39,15 @@ jobs:
     # Run widget tests for our flutter project.
     # - run: flutter test
     
-    # Build apk.
+  # Build apk.
+    - name: decrypt
+      run: |
+        mkdir $HOME/private
+        gpg --quiet --batch --yes --decrypt --passphrase="$FIREBASE_SECRET" \
+        --output $HOME/private/services.tar services.tar.gpg
+        tar xvf $HOME/private/services.tar
+      env:
+        FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
 
     - run: flutter build apk --split-per-abi
 
@@ -59,7 +67,7 @@ jobs:
         to: ${{ secrets.TELEGRAM_ID }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: |
-            New APK release on your flutter repo  powered by github actions 🐰
+            New APK release powered by github actions 🐰
 
             Repository : ${{ github.repository }}
 
@@ -69,7 +77,7 @@ jobs:
 
             Stay calm and build vigorously , you can do it !!
             
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            See commit changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
             
         document: build/app/outputs/apk/release/${{github.event.head_commit.message}}.apk
     

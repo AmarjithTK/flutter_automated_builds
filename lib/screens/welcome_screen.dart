@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/betterbutton.dart';
 // import 'package:linuxclock/screens/login_screen.dart';
 // import 'package:linuxclock/screens/registration_screen.dart';
 
@@ -11,53 +12,53 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation animation;
-  late Animation colorTween;
+  // late AnimationController controller;
+  // late Animation animation;
+  // late Animation colorTween;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
 
-    controller = AnimationController(
-      duration: Duration(
-        seconds: 2,
-      ),
+  //   controller = AnimationController(
+  //     duration: Duration(
+  //       seconds: 2,
+  //     ),
 
-      vsync: this,
-      // upperBound: 1,
-    );
+  //     vsync: this,
+  //     // upperBound: 1,
+  //   );
 
-    controller.forward(from: 0.3);
+  //   controller.forward(from: 0.3);
 
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
-    animation.addStatusListener((status) {
-      print(status);
+  //   animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+  //   animation.addStatusListener((status) {
+  //     print(status);
 
-      if (status == AnimationStatus.completed) {
-        controller.reverse(from: 1);
-      } else if (status == AnimationStatus.dismissed) {
-        controller.forward(from: 0.5);
-      }
-    });
+  //     if (status == AnimationStatus.completed) {
+  //       controller.reverse(from: 1);
+  //     } else if (status == AnimationStatus.dismissed) {
+  //       controller.forward(from: 0.5);
+  //     }
+  //   });
 
-    // Tweens animation ( oscillating bw two values)
-    // color tween
+  //   // Tweens animation ( oscillating bw two values)
+  //   // color tween
 
-    colorTween =
-        ColorTween(begin: Colors.green, end: Colors.blue).animate(controller);
+  //   colorTween =
+  //       ColorTween(begin: Colors.green, end: Colors.blue).animate(controller);
 
-    controller.addListener(() {
-      setState(() {});
-    });
-  }
+  //   controller.addListener(() {
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    controller.dispose();
+    // controller.dispose();
   }
 
   @override
@@ -81,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   child: Hero(
                     tag: 'brand_image',
                     child: Image(
-                      width: animation.value * 150,
+                      width: 150,
                       image: NetworkImage(
                           'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
                     ),
@@ -95,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
             Center(
-                child: Text(controller.value.toStringAsFixed(2),
+                child: Text('controller.value.toStringAsFixed(2)',
                     style: TextStyle(fontSize: 50.0))),
             SizedBox(
               height: 30.0,
@@ -114,26 +115,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class BetterMaterialButton extends StatelessWidget {
-  BetterMaterialButton({required this.buttonText, required this.onTap});
-  final String buttonText;
-  final onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-      child: MaterialButton(
-        color: Colors.lightBlue,
-        padding: EdgeInsets.symmetric(vertical: 15.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        onPressed: onTap,
-        child: Text(buttonText),
       ),
     );
   }
