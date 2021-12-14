@@ -63,13 +63,11 @@ jobs:
 
             Repository : ${{ github.repository }}
 
-            Date : ${{ steps.date.outputs.date }}
-
             Commit message  :  ${{ github.event.head_commit.message }}
 
             ${{ github.actor }} created this commit
 
-            Stay calm and build vigorously
+            Stay calm and build vigorously , you can do it !!
             
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
             

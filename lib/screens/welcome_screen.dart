@@ -9,8 +9,29 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  // AnimationController _controller ;
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    controller = AnimationController(
+      duration: Duration(
+        seconds: 5,
+      ),
+      vsync: this,
+      // upperBound: 1,
+    );
+
+    controller.forward();
+
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Text('Flash Chat Firebase'),
         ),
       ),
-      // backgroundColor: Colors.green,
+      backgroundColor: Colors.red.withOpacity(controller.value),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Center(
               child: Hero(
-                tag: 'logo',
+                tag: 'brand_image',
                 child: Image(
                   width: 200.0,
                   height: 200.0,
@@ -38,6 +59,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
+            Center(
+                child: Text(controller.value.toStringAsFixed(2),
+                    style: TextStyle(fontSize: 50.0))),
             SizedBox(
               height: 30.0,
             ),
