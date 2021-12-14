@@ -40,14 +40,21 @@ jobs:
     # - run: flutter test
     
     # Build apk.
+
     - run: flutter build apk --split-per-abi
 
 
+    - name: set Time
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+
+
     # share the release apk directly to telegram    
+
+
     # - uses: actions/checkout@master
     - name: send release apk
       uses: appleboy/telegram-action@master
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       with:
         to: ${{ secrets.TELEGRAM_ID }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
