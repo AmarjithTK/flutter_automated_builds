@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linuxclock/screens/login_screen.dart';
-import 'package:linuxclock/screens/registration_screen.dart';
+// import 'package:linuxclock/screens/login_screen.dart';
+// import 'package:linuxclock/screens/registration_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = '/'; // very important concept here bro!!
