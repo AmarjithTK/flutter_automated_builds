@@ -44,8 +44,8 @@ jobs:
     - run: flutter build apk --split-per-abi
 
 
-    - name: set Time
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: Rename files
+      run: mv build/app/outputs/apk/release/${{github.event.head_commit.message}}.apk build/app/outputs/apk/release/${{github.event.head_commit.message}}.apk
 
 
 
@@ -63,7 +63,7 @@ jobs:
 
             Repository : ${{ github.repository }}
 
-            Commit message  :  ${{ github.event.head_commit.message }}
+            Commit message  :  **${{ github.event.head_commit.message }}**
 
             ${{ github.actor }} created this commit
 
@@ -71,10 +71,10 @@ jobs:
             
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
             
-        document: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+        document: build/app/outputs/apk/release/${{github.event.head_commit.message}}.apk
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
       with:
         name: release-apk
-        path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+        path: build/app/outputs/apk/release/${{github.event.head_commit.message}}.apk

@@ -12,6 +12,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
+  late Animation animation;
+  late Animation colorTween;
 
   @override
   void initState() {
@@ -20,17 +22,42 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     controller = AnimationController(
       duration: Duration(
-        seconds: 5,
+        seconds: 2,
       ),
+
       vsync: this,
       // upperBound: 1,
     );
 
-    controller.forward();
+    controller.forward(from: 0.3);
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+    animation.addStatusListener((status) {
+      print(status);
+
+      if (status == AnimationStatus.completed) {
+        controller.reverse(from: 1);
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward(from: 0.5);
+      }
+    });
+
+    // Tweens animation ( oscillating bw two values)
+    // color tween
+
+    colorTween =
+        ColorTween(begin: Colors.green, end: Colors.blue).animate(controller);
 
     controller.addListener(() {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
   }
 
   @override
@@ -42,22 +69,30 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           child: Text('Flash Chat Firebase'),
         ),
       ),
-      backgroundColor: Colors.red.withOpacity(controller.value),
+      // backgroundColor: Colors.red.withOpacity(controller.value),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center(
-              child: Hero(
-                tag: 'brand_image',
-                child: Image(
-                  width: 200.0,
-                  height: 200.0,
-                  image: NetworkImage(
-                      'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+            Row(
+              children: [
+                Center(
+                  child: Hero(
+                    tag: 'brand_image',
+                    child: Image(
+                      width: animation.value * 150,
+                      image: NetworkImage(
+                          'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+                    ),
+                  ),
                 ),
-              ),
+                Text('flashchat',
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 5.0))
+              ],
             ),
             Center(
                 child: Text(controller.value.toStringAsFixed(2),
