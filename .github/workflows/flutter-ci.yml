@@ -6,7 +6,9 @@ on:
   push:
     branches:
     - master
-    - fresh
+    - flashchat
+    - '**'        # matches every branch
+
     
 # on: push    # Default will running for every branch.
     
@@ -51,7 +53,7 @@ jobs:
         FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
 
 
-    - name: Provide SECRET FILE FIREBASE OPTIONS Android
+    - name: firebase options
       env:
         FIREBASE_CONFIG_DEV: ${{ secrets.FIREBASE_OPTIONS }}
       run: echo $FIREBASE_CONFIG_DEV > ./lib/firebase_options.dart
