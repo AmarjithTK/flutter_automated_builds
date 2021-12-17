@@ -94,7 +94,10 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
-                stream: _firestore.collection('message').snapshots(),
+                stream: _firestore
+                    .collection('message')
+                    .orderBy('date')
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
@@ -123,8 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     //   messageTiles.add(messageTile);
                     // }
 
-                    final isUser =
-                        sendermail == _auth.currentUser!.email ? true : false;
+                    final isUser = sendermail == _auth.currentUser!.email;
 
                     messageTile = MessageBubble(messageText, sender, isUser);
                     messageTiles.add(messageTile);
@@ -138,6 +140,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }),
             Container(
+              margin: EdgeInsets.only(top: 20.0),
+              padding: EdgeInsets.only(top: 5.0),
               decoration: kMessageContainerDecoration,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +162,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       messagecontroller.clear();
                       _firestore.collection('message').add({
                         "message": messageText,
-                        "sender": _auth.currentUser!.email
+                        "sender": _auth.currentUser!.email,
+                        "date": DateTime.now().toIso8601String().toString(),
+
                         // "sender": (_auth.currentUser != null)
                         //     ? _auth.currentUser!.email
                         //     : 'unknown user'
@@ -210,51 +216,14 @@ class MessageBubble extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
               child: Text(
                 message,
-                style: TextStyle(fontSize: 20.0),
+                style: TextStyle(
+                    fontSize: 20.0,
+                    color: isUser ? Colors.black : Colors.white),
               ),
             ),
             color: isUser ? lighter : dark,
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class MessageBubbleReceived extends StatelessWidget {
-  MessageBubbleReceived(this.message, this.sender);
-
-  final message;
-  final sender;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              sender,
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w200),
-            ),
-          ),
-          Material(
-              elevation: 10.0,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                child: Text(
-                  message,
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ),
-              color: dark,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(8), bottomLeft: Radius.circular(8)))
         ],
       ),
     );
