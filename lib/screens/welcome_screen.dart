@@ -64,12 +64,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Center(
-          child: Text('Flash Chat Firebase'),
-        ),
-      ),
       // backgroundColor: Colors.red.withOpacity(controller.value),
       body: SafeArea(
         child: Column(
@@ -96,8 +90,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
             Center(
-                child: Text('controller.value.toStringAsFixed(2)',
-                    style: TextStyle(fontSize: 50.0))),
+                child:
+                    Text('get ur firebase', style: TextStyle(fontSize: 15.0))),
             SizedBox(
               height: 30.0,
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/betterbutton.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +11,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late String email;
+  late String password;
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,18 +48,23 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
             ),
             TextField(
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
                 //Do something with the user input.
+                email = value;
               },
-              decoration:
-                  kDecorateInput.copyWith(hintText: 'Enter your Password'),
+              decoration: kDecorateInput.copyWith(hintText: 'Enter your email'),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
+              obscureText: true,
               onChanged: (value) {
                 //Do something with the user input.
+                password = value;
               },
               decoration:
                   kDecorateInput.copyWith(hintText: 'Enter your Password'),
@@ -62,7 +72,20 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 24.0,
             ),
-            BetterMaterialButton(buttonText: 'Register', onTap: () {}),
+            BetterMaterialButton(
+                buttonText: 'Sign in',
+                onTap: () async {
+                  try {
+                    UserCredential user =
+                        await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, '/chat');
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                }),
           ],
         ),
       ),
