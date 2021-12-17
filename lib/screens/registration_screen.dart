@@ -29,16 +29,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  height: 50.0,
-                  child: Hero(
-                    tag: 'brand_image',
-                    child: Image(
-                      image: NetworkImage(
-                          'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
-                    ),
+              Flexible(
+                child: Hero(
+                  tag: 'brand_image',
+                  child: Image(
+                    width: 250.0,
+                    height: 200.0,
+                    image: NetworkImage(
+                        'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
                   ),
                 ),
               ),

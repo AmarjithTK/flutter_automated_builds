@@ -72,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           children: [
             Row(
               children: [
-                Center(
+                Flexible(
                   child: Hero(
                     tag: 'brand_image',
                     child: Image(

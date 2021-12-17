@@ -53,9 +53,16 @@ jobs:
         FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
 
 
-    - name: firebase_options
-      run: echo ${{ secrets.FIREBASE_OPTIONS }} > ./lib/firebase_option.dart
-  
+    - name: firebase options
+      run: base64 -d $FIREBASE_OPTIONS > ./lib/firebase_options.dart
+      env:
+        FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+
+
+
+    # - name: firebase_options
+    #   run: echo ${{ secrets.FIREBASE_OPTIONS }} > ./lib/firebase_option.dart
+
 
     # - name: firebase options
     #   env:
