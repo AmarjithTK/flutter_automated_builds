@@ -33,8 +33,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Hero(
                   tag: 'brand_image',
                   child: Image(
-                    width: 250.0,
-                    height: 200.0,
+                    height: 150.0,
+                    // height: 200.0,
                     image: NetworkImage(
                         'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
                   ),
@@ -47,8 +47,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 50.0),
                 child: Center(
                     child: Text(
-                  'Create an account',
-                  style: TextStyle(fontSize: 25.0),
+                  'Welcome'.toUpperCase(),
+                  style: kHeading,
                 )),
               ),
               TextField(

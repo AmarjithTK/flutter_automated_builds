@@ -1,3 +1,4 @@
+import 'package:flashchat/constants.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,11 +20,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late String messageText;
 
-  void getUserData() {
-    if (_auth.currentUser != null) {
-      loggedUser = _auth.currentUser;
-    }
-  }
+  // void getUserData() {
+  //   if (_auth.currentUser != null) {
+  //     loggedUser = _auth.currentUser;
+  //   }
+  // }
 
   // void fetchmessageFuture() async {
   //   // await _firestore.collection('messages').doc().get();
@@ -51,36 +52,40 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserData();
     // fetchmessageStream();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              _auth.signOut();
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          elevation: 0.0,
+          leading: IconButton(
+              onPressed: () {
+                _auth.signOut();
 
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios)),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.clear_all),
-              onPressed: () async {
-                //Implement logout functionality
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios, size: 20.0)),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.clear_all),
+                onPressed: () async {
+                  //Implement logout functionality
 
-                await _firestore.collection('message').get().then((value) => {
-                      for (final document in value.docs)
-                        {document.reference.delete()}
-                    });
-              }),
-        ],
-        title: Center(
-            child: Text('⚡️ Flutter Flash Chat', textAlign: TextAlign.center)),
-        backgroundColor: Colors.lightBlueAccent,
+                  await _firestore.collection('message').get().then((value) => {
+                        for (final document in value.docs)
+                          {document.reference.delete()}
+                      });
+                }),
+          ],
+          title: Center(
+              child:
+                  Text('⚡️ Flutter Flash Chat', textAlign: TextAlign.center)),
+          backgroundColor: dark,
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -102,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   List<Widget> messageTiles = [];
 
-                  for (var message in snapshot.data!.docs) {
+                  for (var message in snapshot.data!.docs.reversed) {
                     final messageText = message['message'];
                     final sendermail = message['sender'];
                     final sender = sendermail.split('@')[0];
@@ -110,16 +115,24 @@ class _ChatScreenState extends State<ChatScreen> {
                     Widget messageTile;
 
                     print(sender);
-                    if (sendermail == loggedUser!.email) {
-                      messageTile = MessageBubbleSend(messageText, sender);
-                    } else {
-                      messageTile = MessageBubbleReceived(messageText, sender);
-                    }
+                    //   if (sendermail == loggedUser!.email) {
+                    //     messageTile = MessageBubble(messageText, sender);
+                    //   } else {
+                    //     messageTile = MessageBubbleReceived(messageText, sender);
+                    //   }
+                    //   messageTiles.add(messageTile);
+                    // }
+
+                    final isUser =
+                        sendermail == _auth.currentUser!.email ? true : false;
+
+                    messageTile = MessageBubble(messageText, sender, isUser);
                     messageTiles.add(messageTile);
                   }
 
                   return Expanded(
                     child: ListView(
+                      reverse: true,
                       children: messageTiles,
                     ),
                   );
@@ -168,18 +181,20 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-class MessageBubbleSend extends StatelessWidget {
-  MessageBubbleSend(this.message, this.sender);
+class MessageBubble extends StatelessWidget {
+  MessageBubble(this.message, this.sender, this.isUser);
 
   final message;
   final sender;
+  final isUser;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -198,7 +213,7 @@ class MessageBubbleSend extends StatelessWidget {
                 style: TextStyle(fontSize: 20.0),
               ),
             ),
-            color: Colors.lightBlueAccent,
+            color: isUser ? lighter : dark,
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           )
         ],
@@ -228,18 +243,18 @@ class MessageBubbleReceived extends StatelessWidget {
             ),
           ),
           Material(
-            elevation: 10.0,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-              child: Text(
-                message,
-                style: TextStyle(fontSize: 20.0),
+              elevation: 10.0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: Text(
+                  message,
+                  style: TextStyle(fontSize: 20.0),
+                ),
               ),
-            ),
-            color: Colors.redAccent,
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          )
+              color: dark,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(8), bottomLeft: Radius.circular(8)))
         ],
       ),
     );

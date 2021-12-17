@@ -1,3 +1,4 @@
+import 'package:flashchat/constants.dart';
 import 'package:flutter/material.dart';
 import '../widgets/betterbutton.dart';
 // import 'package:linuxclock/screens/login_screen.dart';
@@ -70,28 +71,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                Flexible(
-                  child: Hero(
-                    tag: 'brand_image',
-                    child: Image(
-                      width: 150,
-                      image: NetworkImage(
-                          'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+            Center(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Hero(
+                      tag: 'brand_image',
+                      child: Image(
+                        width: 100,
+                        image: NetworkImage(
+                            'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
+                      ),
                     ),
                   ),
-                ),
-                Text('flashchat',
-                    style: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0))
-              ],
+                  Text('flashchat'.toUpperCase(), style: kHeading)
+                ],
+              ),
             ),
-            Center(
-                child:
-                    Text('get ur firebase', style: TextStyle(fontSize: 15.0))),
             SizedBox(
               height: 30.0,
             ),

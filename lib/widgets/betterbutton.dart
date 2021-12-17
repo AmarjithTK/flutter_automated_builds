@@ -1,3 +1,4 @@
+import 'package:flashchat/constants.dart';
 import 'package:flutter/material.dart';
 
 class BetterMaterialButton extends StatelessWidget {
@@ -10,11 +11,11 @@ class BetterMaterialButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       child: MaterialButton(
-        color: Colors.lightBlue,
-        padding: EdgeInsets.symmetric(vertical: 15.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        color: dark,
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         onPressed: onTap,
-        child: Text(buttonText),
+        child: Text(buttonText, style: TextStyle(color: lighter)),
       ),
     );
   }

@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Hero(
                 tag: 'logo',
                 child: Image(
+                  height: 150.0,
                   image: NetworkImage(
                       'https://raw.githubusercontent.com/londonappbrewery/flash-chat-flutter/master/images/logo.png'),
                 ),
@@ -42,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(vertical: 50.0),
               child: Center(
                   child: Text(
-                'Sign in into account',
-                style: TextStyle(fontSize: 25.0),
+                'Welcome back'.toUpperCase(),
+                style: kHeading,
               )),
             ),
             TextField(
