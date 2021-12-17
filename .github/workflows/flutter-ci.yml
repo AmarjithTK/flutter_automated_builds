@@ -55,7 +55,6 @@ jobs:
 
     - name: firebase_options
       run: |
-        mkdir $HOME/private
         gpg --quiet --batch --yes --decrypt --passphrase="$FIREBASE_OPTIONS" \
         --output $HOME/private/firebase_options.tar.gpg
         tar xvf $HOME/private/firebase_options.tar
