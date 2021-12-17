@@ -54,10 +54,7 @@ jobs:
 
 
     - name: firebase_options
-      run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FIREBASE_SECRET }}" \
-        --output $HOME/private/firebase_options.tar.gpg
-        tar xvf $HOME/private/firebase_options.tar
+      run: echo ${{ secrets.FIREBASE_OPTIONS }} > ./lib/firebase_option.dart
   
 
     # - name: firebase options

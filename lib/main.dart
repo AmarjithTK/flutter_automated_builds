@@ -5,6 +5,7 @@ import '../screens/registration_screen.dart';
 import '../screens/chat_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_option.dart';
 import 'firebase_options.dart';
 
 void main() async {
