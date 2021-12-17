@@ -36,21 +36,21 @@ class _ChatScreenState extends State<ChatScreen> {
   //   }
   // }
 
-  void fetchmessageStream() async {
-    // realtime subscriber for data ... firebase pushing changes to app
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var document in snapshot.docs) {
-        print(document['message']);
-      }
-    }
-  }
+  // void fetchmessageStream() async {
+  //   // realtime subscriber for data ... firebase pushing changes to app
+  //   await for (var snapshot in _firestore.collection('messages').snapshots()) {
+  //     for (var document in snapshot.docs) {
+  //       print(document['message']);
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserData();
-    fetchmessageStream();
+    // fetchmessageStream();
   }
 
   @override
@@ -67,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Navigator.pop(context);
               }),
         ],
-        title: Text('⚡️Chat $loggedUser'),
+        title: Text('⚡️Chat ${loggedUser.email}'),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
@@ -128,6 +128,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   for (var message in data) {
                     final messageText = message['message'];
                     final sender = message['sender'];
+                    print(sender);
 
                     final messageTile = ListTile(
                         subtitle:

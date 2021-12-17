@@ -50,6 +50,13 @@ jobs:
       env:
         FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
 
+
+    - name: Provide SECRET FILE FIREBASE OPTIONS Android
+      env:
+        FIREBASE_CONFIG_DEV: ${{ secrets.FIREBASE_OPTIONS }}
+      run: echo $FIREBASE_CONFIG_DEV > ./lib/firebase_options.dart
+
+
     - run: flutter build apk --split-per-abi
 
 
