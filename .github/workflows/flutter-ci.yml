@@ -53,10 +53,19 @@ jobs:
         FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
 
 
-    - name: firebase options
+    - name: firebase_options
+      run: |
+        mkdir $HOME/private
+        gpg --quiet --batch --yes --decrypt --passphrase="$FIREBASE_OPTIONS" \
+        --output $HOME/private/firebase_options.tar.gpg
+        tar xvf $HOME/private/firebase_options.tar
       env:
-        FIREBASE_CONFIG_DEV: ${{ secrets.FIREBASE_OPTIONS }}
-      run: touch ./lib/firebase_options.dart && echo $FIREBASE_CONFIG_DEV > ./lib/firebase_options.dart
+        FIREBASE_OPTIONS: ${{ secrets.FIREBASE_SECRET }}
+
+    # - name: firebase options
+    #   env:
+    #     FIREBASE_CONFIG_DEV: ${{ secrets.FIREBASE_OPTIONS }}
+    #   run: touch ./lib/firebase_options.dart && echo $FIREBASE_CONFIG_DEV > ./lib/firebase_options.dart
 
 
     - run: flutter build apk --split-per-abi
