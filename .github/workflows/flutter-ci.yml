@@ -55,11 +55,10 @@ jobs:
 
     - name: firebase_options
       run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$FIREBASE_OPTIONS" \
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.FIREBASE_SECRET }}" \
         --output $HOME/private/firebase_options.tar.gpg
         tar xvf $HOME/private/firebase_options.tar
-      env:
-        FIREBASE_OPTIONS: ${{ secrets.FIREBASE_SECRET }}
+  
 
     # - name: firebase options
     #   env:
