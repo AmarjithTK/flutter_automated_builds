@@ -75,10 +75,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: () async {
                   //Implement logout functionality
 
-                  await _firestore.collection('message').get().then((value) => {
-                        for (final document in value.docs)
-                          {document.reference.delete()}
-                      });
+                  await _firestore
+                      .collection('flashchatmessage')
+                      .get()
+                      .then((value) => {
+                            for (final document in value.docs)
+                              {document.reference.delete()}
+                          });
                 }),
           ],
           title: Center(
@@ -94,10 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             StreamBuilder<QuerySnapshot>(
-                stream: _firestore
-                    .collection('message')
-                    .orderBy('date')
-                    .snapshots(),
+                stream: _firestore.collection('flashchatmessage').snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
@@ -160,10 +160,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () async {
                       //Implement send functionality.
                       messagecontroller.clear();
-                      _firestore.collection('message').add({
+                      _firestore.collection('flashchatmessage').add({
                         "message": messageText,
                         "sender": _auth.currentUser!.email,
-                        "date": DateTime.now().toIso8601String().toString(),
 
                         // "sender": (_auth.currentUser != null)
                         //     ? _auth.currentUser!.email
